@@ -1,36 +1,63 @@
 # install.ps1
 
-# Function to check and update PowerShellGet and PackageManagement
-function Update-PowerShellGet {
+# Function to ensure NuGet provider is installed
+function Ensure-NuGetProvider {
   try {
-      Write-Host 'Checking for PowerShellGet and PackageManagement updates...'
-      
-      # Ensure PowerShellGet is updated
-      Install-Module -Name PowerShellGet -Force -AllowClobber -ErrorAction Stop
-      # Ensure PackageManagement is updated
-      Install-Module -Name PackageManagement -Force -AllowClobber -ErrorAction Stop
-      
-      Write-Host 'PowerShellGet and PackageManagement updated successfully.'
+      if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
+          Write-Host 'Installing NuGet provider...'
+          Install-PackageProvider -Name NuGet -Force -Scope CurrentUser -ErrorAction Stop
+          Write-Host 'NuGet provider installed successfully.'
+      } else {
+          Write-Host 'NuGet provider is already installed.'
+      }
   } catch {
-      Write-Host 'Failed to update PowerShellGet or PackageManagement: ' $_.Exception.Message
+      Write-Host 'Failed to install NuGet provider: ' $_.Exception.Message
   }
 }
 
-# Update PowerShellGet and PackageManagement
-Update-PowerShellGet
+# Ensure NuGet provider is installed
+Ensure-NuGetProvider
 
+# Function to install modules with error handling
+function Try-InstallModule {
+  param (
+      [string]$ModuleName,
+      [string]$RequiredVersion = $null
+  )
+  
+  try {
+      if ($RequiredVersion) {
+          Install-Module -Name $ModuleName -RequiredVersion $RequiredVersion -Force -AllowClobber -ErrorAction Stop
+      } else {
+          Install-Module -Name $ModuleName -Force -AllowClobber -ErrorAction Stop
+      }
+      Write-Host "$ModuleName installed successfully."
+  } catch {
+      Write-Host "Failed to install $($ModuleName): $_.Exception.Message"
+      Write-Host "Try running the following command manually in an elevated PowerShell session:"
+      if ($RequiredVersion) {
+          Write-Host "Install-Module -Name $ModuleName -RequiredVersion $RequiredVersion -Force -AllowClobber"
+      } else {
+          Write-Host "Install-Module -Name $ModuleName -Force -AllowClobber"
+      }
+  }
+}
+
+# Your existing script logic
+
+# Update PowerShellGet and PackageManagement
+Try-InstallModule -ModuleName PowerShellGet
+Try-InstallModule -ModuleName PackageManagement
+
+# Install Terminal-Icons
+Try-InstallModule -ModuleName Terminal-Icons -RequiredVersion 0.9.0
+
+# Other installation steps
 try {
   Write-Host 'Downloading and running Oh My Posh installation script...'
   winget install JanDeDobbeleer.OhMyPosh -s winget
 } catch {
   Write-Host 'Failed to download installation script. Check your internet connection: ' $_.Exception.Message
-}
-
-try {
-  Write-Host 'Installing Terminal-Icons module...'
-  Install-Module -Name Terminal-Icons -RequiredVersion 0.9.0 -Force -AllowClobber
-} catch {
-  Write-Host 'Failed to install Terminal-Icons module: ' $_.Exception.Message
 }
 
 try {
