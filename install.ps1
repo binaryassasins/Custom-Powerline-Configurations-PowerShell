@@ -40,3 +40,18 @@ try {
     Write-Host 'Failed to copy theme file: ' $_.Exception.Message
 }
 
+# Define the path to the "Job Runner" folder
+$folderPath = '.\Job Runner'
+
+# Get the current user PATH variable
+$currentPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+# Check if the folder is already in the PATH
+if ($currentPath -notlike "*$folderPath*") {
+    # Add the folder to the PATH
+    $newPath = $currentPath + ";" + $folderPath
+    [System.Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+    Write-Host "'$folderPath' has been added to the user PATH."
+} else {
+    Write-Host "'$folderPath' is already in the user PATH."
+}
