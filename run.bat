@@ -9,8 +9,8 @@ powershell -Command "& {
         Write-Host 'Downloading and running Oh My Posh installation script...'
         Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
     } catch {
-        Write-Host 'Failed to download installation script. Check your internet connection: ' $_.Exception.Message;
-        exit;
+        Write-Host 'Failed to download installation script. Check your internet connection: ' $_.Exception.Message
+        exit
     }
 
     try {
@@ -27,11 +27,11 @@ powershell -Command "& {
         Write-Host 'Failed to install Neovim: ' $_.Exception.Message
     }
 
-    $profilePath = '.\Microsoft.PowerShell_profile.ps1';
+    $profilePath = '.\Microsoft.PowerShell_profile.ps1'
     if (Test-Path $profilePath) {
         try {
             Write-Host 'Copying PowerShell profile...'
-            Copy-Item -Path $profilePath -Destination "$env:USERPROFILE\Documents\PowerShell";
+            Copy-Item -Path $profilePath -Destination "$env:USERPROFILE\Documents\PowerShell"
             Write-Host 'Profile replaced successfully.'
         } catch {
             Write-Host 'Failed to copy PowerShell profile: ' $_.Exception.Message
