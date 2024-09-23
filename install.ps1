@@ -1,10 +1,9 @@
 # install.ps1
 try {
     Write-Host 'Downloading and running Oh My Posh installation script...'
-    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
+    winget install JanDeDobbeleer.OhMyPosh -s winget
 } catch {
     Write-Host 'Failed to download installation script. Check your internet connection: ' $_.Exception.Message
-    exit
 }
 
 try {
