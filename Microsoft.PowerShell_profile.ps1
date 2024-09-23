@@ -25,7 +25,7 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 
 #Modules
 #Import-Module microsoft.powershell.localaccounts -UseWindowsPowerShell
-Import-PSResource -Name Terminal-Icons
+Import-Module -Name Terminal-Icons
 
 #Powerline
 oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\kushalxmod.omp.json" | Invoke-Expression
