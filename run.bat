@@ -1,6 +1,6 @@
 @echo off
-echo "In order for terminal to work properly, please ensure that you have installed Nerd Fonts (https://www.nerdfonts.com/font-downloads) or you may install stock fonts in the 'Fonts' folder."
-echo "Running Powerline Installation/Configuration"
+echo In order for terminal to work properly, please ensure that you have installed Nerd Fonts (https://www.nerdfonts.com/font-downloads) or you may install stock fonts in the 'Fonts' folder.
+echo Running Powerline Installation/Configuration
 
 powershell -Command "& {
     Set-ExecutionPolicy Bypass -Scope Process -Force;
@@ -48,6 +48,6 @@ powershell -Command "& {
     }
 }"
 
-echo "Installation Completed! Restart Your Terminal..."
-echo "Press any key to exit."
+echo Installation Completed! Restart Your Terminal...
+echo Press any key to exit.
 pause >nul
