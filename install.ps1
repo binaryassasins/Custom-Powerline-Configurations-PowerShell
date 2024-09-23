@@ -41,7 +41,7 @@ try {
 }
 
 # Define the path to the "Job Runner" folder
-$folderPath = '.\Job Runner'
+$folderPath = (Get-Location).Path + '\Job Runner'
 
 # Get the current user PATH variable
 $currentPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
