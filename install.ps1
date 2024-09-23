@@ -8,7 +8,7 @@ try {
 
 try {
     Write-Host 'Installing Terminal-Icons module...'
-    Install-Module -Name Terminal-Icons -RequiredVersion 0.9.0 -Force -AllowClobber
+    Install-Module -Name Terminal-Icons -RequiredVersion 0.9.0
 } catch {
     Write-Host 'Failed to install Terminal-Icons module: ' $_.Exception.Message
 }
